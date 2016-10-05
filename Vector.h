@@ -15,9 +15,9 @@ class Vector{
     unsigned int sizeArray = 0;
     unsigned int capacityArray = 0;
 
-    void reserve(){
-        if (capacityArray == 0) capacityArray = 2;
-        else capacityArray = 2 * capacityArray;
+    void reserve(unsigned int _capacityArray){
+        if (_capacityArray == 0) capacityArray = 2;
+        else capacityArray = _capacityArray;
         T *_array = (T *) (operator new(sizeof(T) * capacityArray));
         for (int i = 0; i < sizeArray; ++i) new(_array + i)T(array[i]);
         for (int j = 0; j < sizeArray; ++j) array[j].~T();
@@ -36,7 +36,7 @@ public:
         for (int i = 0; i < sizeArray; ++i) new (array + i)T(data);
     }
     void pushBack(const T& data){
-        if (sizeArray == capacityArray) reserve();
+        if (sizeArray == capacityArray) reserve(2 * capacityArray);
         new (array + sizeArray)T(data);
         sizeArray++;
     }
