@@ -12,8 +12,8 @@ using namespace std;
 template<typename T>
 class Vector{
     T * array;
-    int sizeArray = 0;
-    int capacityArray = 0;
+    unsigned int sizeArray = 0;
+    unsigned int capacityArray = 0;
 
     void reserve(){
         if (capacityArray == 0) capacityArray = 2;
@@ -27,9 +27,9 @@ public:
     Vector(){
         array = (T*)(operator new (0));
     }
-    Vector(int _sizeArray): Vector(_sizeArray, T()){}
+    Vector(unsigned int _sizeArray): Vector(_sizeArray, T()){}
 
-    Vector(int _sizeArray, const T &data){
+    Vector(unsigned int _sizeArray, const T &data){
         sizeArray = _sizeArray;
         capacityArray = 2 * sizeArray;
         array = (T*)(operator new (sizeof(T) * capacityArray));
