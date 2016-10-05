@@ -21,6 +21,7 @@ class Vector{
         T *_array = (T *) (operator new(sizeof(T) * capacityArray));
         for (int i = 0; i < sizeArray; ++i) new(_array + i)T(array[i]);
         for (int j = 0; j < sizeArray; ++j) array[j].~T();
+        delete array;
         array = _array;
     }
 public:
