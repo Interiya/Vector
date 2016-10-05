@@ -31,7 +31,7 @@ public:
 
     Vector(unsigned int _sizeArray, const T &data){
         sizeArray = _sizeArray;
-        capacityArray = 2 * sizeArray;
+        capacityArray = sizeArray;
         array = (T*)(operator new (sizeof(T) * capacityArray));
         for (int i = 0; i < sizeArray; ++i) new (array + i)T(data);
     }
