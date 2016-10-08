@@ -24,8 +24,8 @@ class Vector{
         delete array;
         array = _array;
     }
-
-private:
+public:
+    typedef T* iterator;
     void outOfRangeInt(int i){
         try {
             if (i < 0 || i > sizeArray) throw (Exeption());
@@ -40,9 +40,6 @@ private:
             exeption.why();
         }
     }
-public:
-    typedef T* iterator;
-
     Vector(){
         array = (T*)(operator new (0));
     }
@@ -91,6 +88,22 @@ public:
         }
         (*end() - 1).~T();
         sizeArray--;
+    }
+    void arase(iterator i, iterator j){
+        outOfRangeIterator(i);
+        outOfRangeIterator(j);
+        for (iterator k = i; k != j + 1 ; ++k) {
+            (*k).~T();
+        }
+        iterator end = end();
+        iterator _j = j + 1;
+        for (iterator k = i; j+1 != end() ; ++k, j++) {
+            *i = *(j+1);
+        }
+        sizeArray = sizeArray - ((int)(array - j) - (int)(array - i)) - 1;
+        for (_j; _j != end ; ++_j) {
+            (*_j).~T();
+        }
     }
     class Exeption{
     public:
