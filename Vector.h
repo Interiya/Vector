@@ -92,6 +92,7 @@ public:
     void arase(iterator i, iterator j){
         outOfRangeIterator(i);
         outOfRangeIterator(j);
+        if (i == j) erase(i);
         for (iterator k = i; k != j + 1 ; ++k) {
             (*k).~T();
         }
