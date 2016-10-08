@@ -5,8 +5,8 @@
 #ifndef VECTOR_VECTOR_H
 #define VECTOR_VECTOR_H
 
-
 #include <new>
+
 using namespace std;
 
 template<typename T>
@@ -24,6 +24,22 @@ class Vector{
         delete array;
         array = _array;
     }
+
+private:
+    void outOfRangeInt(int i){
+        try {
+            if (i < 0 || i > sizeArray) throw (Exeption());
+        } catch (Exeption exeption){
+            exeption.why();
+        }
+    }
+    void outOfRangeIterator(iterator i){
+        try {
+            if (i < begin() || i >= end()) throw (Exeption());
+        } catch (Exeption exeption){
+            exeption.why();
+        }
+    }
 public:
     typedef T* iterator;
 
@@ -32,13 +48,8 @@ public:
     }
     Vector(unsigned int _sizeArray): Vector(_sizeArray, T()){}
     T &operator[](int i){
-        try {
-            if (i < 0 || i > sizeArray) throw(Exeption());
-            return array[i];
-        }
-        catch (Exeption exeption){
-            exeption.why();
-        }
+        outOfRangeInt(i);
+        return array[i];
     }
     Vector(unsigned int _sizeArray, const T &data){
         sizeArray = _sizeArray;
@@ -63,19 +74,23 @@ public:
     iterator end(){
         return begin() + sizeArray;
     }
-
-    void inSert(iterator i, const T &data){
-        try{
-            if (i < begin() || i >= end()) throw (Exeption());
-            if (sizeArray == capacityArray) reserve(2 * capacityArray);
-            for (iterator j = end(); j < i + 1; ++j) {
-                *j = *(j - 1);
-            }
-            *(i+1) = data;
+    void insert(iterator i, const T &data){
+        outOfRangeIterator(i);
+        if (sizeArray == capacityArray) reserve(2 * capacityArray);
+        for (iterator j = end(); j != i + 1; ++j) {
+            *j = *(j - 1);
         }
-        catch (Exeption exeption){
-            exeption.why();
+        *(i+1) = data;
+        sizeArray++;
+    }
+    void erase(iterator i){
+        outOfRangeIterator(i);
+        (*i).~T();
+        for (iterator j = i; j != end() - 1; ++j) {
+            *j = *(j + 1);
         }
+        (*end() - 1).~T();
+        sizeArray--;
     }
     class Exeption{
     public:
@@ -84,9 +99,6 @@ public:
         }
     };
 };
-
-
-
 
 
 #endif //VECTOR_VECTOR_H
