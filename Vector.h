@@ -49,6 +49,12 @@ public:
         new (array + sizeArray)T(data);
         sizeArray++;
     }
+    T &front(){
+        return array[0];
+    }
+    T &back(){
+        return array[sizeArray - 1];
+    }
     class Exeption{
     public:
         void why(){
