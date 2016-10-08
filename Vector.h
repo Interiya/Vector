@@ -29,7 +29,15 @@ public:
         array = (T*)(operator new (0));
     }
     Vector(unsigned int _sizeArray): Vector(_sizeArray, T()){}
-
+    T &operator[](int i){
+        try {
+            if (i < 0 && i > sizeArray) throw(Exeption());
+            return array[i];
+        }
+        catch (Exeption exeption){
+            exeption.why();
+        }
+    }
     Vector(unsigned int _sizeArray, const T &data){
         sizeArray = _sizeArray;
         capacityArray = sizeArray;
@@ -41,6 +49,12 @@ public:
         new (array + sizeArray)T(data);
         sizeArray++;
     }
+    class Exeption{
+    public:
+        void why(){
+        cout << "выход за границу" << endl;
+        }
+    };
 };
 
 
