@@ -25,13 +25,15 @@ class Vector{
         array = _array;
     }
 public:
+    typedef T* iterator;
+
     Vector(){
         array = (T*)(operator new (0));
     }
     Vector(unsigned int _sizeArray): Vector(_sizeArray, T()){}
     T &operator[](int i){
         try {
-            if (i < 0 && i > sizeArray) throw(Exeption());
+            if (i < 0 || i > sizeArray) throw(Exeption());
             return array[i];
         }
         catch (Exeption exeption){
@@ -54,6 +56,26 @@ public:
     }
     T &back(){
         return array[sizeArray - 1];
+    }
+    iterator begin(){
+        return array;
+    }
+    iterator end(){
+        return begin() + sizeArray;
+    }
+
+    void inSert(iterator i, const T &data){
+        try{
+            if (i < begin() || i >= end()) throw (Exeption());
+            if (sizeArray == capacityArray) reserve(2 * capacityArray);
+            for (iterator j = end(); j < i + 1; ++j) {
+                *j = *(j - 1);
+            }
+            *(i+1) = data;
+        }
+        catch (Exeption exeption){
+            exeption.why();
+        }
     }
     class Exeption{
     public:
