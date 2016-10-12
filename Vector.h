@@ -6,6 +6,7 @@
 #define VECTOR_VECTOR_H
 
 #include <new>
+#include <algorithm>
 
 using namespace std;
 
@@ -47,6 +48,9 @@ public:
     T &operator[](int i){
         outOfRangeInt(i);
         return array[i];
+    }
+    unsigned int size(){
+        return sizeArray;
     }
     Vector(unsigned int _sizeArray, const T &data){
         sizeArray = _sizeArray;
@@ -113,6 +117,17 @@ public:
         }
     };
 };
+template<typename T>
+bool operator==(const Vector<T>& aa,const Vector<T>& bb) {
+    Vector<T>& a = (Vector<T>&)aa;
+    Vector<T>& b = (Vector<T>&)bb;
+    if (a.size() == b.size()){
+        for (unsigned int i = 0; i < a.size(); ++i){
+            if (a[i] != b[i]) return false;
+        }
+        return true;
+    } else return false;
+}
 
 
 #endif //VECTOR_VECTOR_H
