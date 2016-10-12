@@ -78,7 +78,7 @@ public:
     void insert(iterator i, const T &data){
         outOfRangeIterator(i);
         if (sizeArray == capacityArray) reserve(2 * capacityArray);
-        for (iterator j = end(); j != i + 1; ++j) {
+        for (iterator j = end(); j != i + 1; --j) {
             *j = *(j - 1);
         }
         *(i+1) = data;
